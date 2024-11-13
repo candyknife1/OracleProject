@@ -10,7 +10,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.http.HttpSession;
 import java.util.List;
 
 @Controller
@@ -42,8 +42,8 @@ public class StudentController {
     @GetMapping("/selectByPage")
     @ResponseBody
     public JSONObject selectByPage(
-            @RequestParam int currentPage,
-            @RequestParam int pageSize,
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize,
             HttpSession session) {
         PageBean<Student> pageBean = studentService.selectByPage(currentPage, pageSize);
         String userName = ((User) session.getAttribute("user")).getUsername();
@@ -56,29 +56,29 @@ public class StudentController {
     @PostMapping("/selectByPageAndCondition")
     @ResponseBody
     public PageBean<Student> selectByPageAndCondition(
-            @RequestParam int currentPage,
-            @RequestParam int pageSize,
+            @RequestParam("currentPage") int currentPage,
+            @RequestParam("pageSize") int pageSize,
             @RequestBody Student student) {
         return studentService.selectByPageAndCondition(currentPage, pageSize, student);
     }
 
-    @DeleteMapping("/deleteById")
+    @GetMapping("/deleteById")
     @ResponseBody
-    public String deleteById(@RequestParam int id) {
+    public String deleteById(@RequestParam("id") int id) {
         studentService.deleteById(id);
         return "success";
     }
 
-    @PutMapping("/update")
+    @PostMapping("/update")
     @ResponseBody
     public String update(@RequestBody Student student) {
         studentService.update(student);
         return "success";
     }
 
-    @GetMapping("/quit")
+    @PostMapping("/out")
     public String quit(HttpSession session) {
         session.invalidate();
-        return "redirect:/login.jsp";
+        return "redirect:../login.jsp";
     }
 }

@@ -2,23 +2,22 @@ package com.lzw.config;
 
 import org.springframework.web.servlet.support.AbstractAnnotationConfigDispatcherServletInitializer;
 
-/**
- * @Author: lzw
- * @Description: TODO
- * @Date: 2024/8/21 21:36
- * @Version: 1.0
- */
 public class SpringMVCInlt extends AbstractAnnotationConfigDispatcherServletInitializer {
+
+    // 根应用上下文配置类
     @Override
     protected Class<?>[] getRootConfigClasses() {
-        return new Class[0];
+        // 有应用程序上下文的配置类
+        return new Class[]{}; // 暂时没有根配置类
     }
 
+    // Spring MVC 配置类
     @Override
     protected Class<?>[] getServletConfigClasses() {
         return new Class[]{MvcConfig.class};
     }
 
+    // DispatcherServlet 的映射路径
     @Override
     protected String[] getServletMappings() {
         return new String[]{"/"};

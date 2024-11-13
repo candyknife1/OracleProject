@@ -17,21 +17,37 @@
     </delete>
 
 
+<!--    <select id="selectByPageAndCondition" resultMap="studentResultMap">-->
+<!--        select *-->
+<!--        from stu-->
+<!--        <where>-->
+<!--            <if test="stu.name !=null and stu.name!=''">-->
+<!--                and name like #{stu.name}-->
+<!--            </if>-->
+
+<!--        <if test="stu.status!=null">-->
+<!--                and status=#{stu.status}-->
+<!--            </if>-->
+<!--        </where>-->
+<!--        limit #{begin},#{size}-->
+
+<!--    </select>-->
+
     <select id="selectByPageAndCondition" resultMap="studentResultMap">
-        select *
-        from stu
+        select * from stu
         <where>
-            <if test="stu.name !=null and stu.name!=''">
+            <if test="stu.name != null and stu.name != ''">
                 and name like #{stu.name}
             </if>
-
-        <if test="stu.status!=null">
-                and status=#{stu.status}
+            <if test="stu.status != null">
+                and status = #{stu.status}
             </if>
         </where>
-        limit #{begin},#{size}
-
+        offset #{begin} rows fetch next #{size} rows only
     </select>
+
+
+
 
     <select id="selectTotalCountByCondition" resultType="java.lang.Integer">
         select count(*)
@@ -53,21 +69,22 @@
         update stu
         <set>
             <if test="name!=null and name!=''">
-                 name = #{name},
+                name = #{name},
             </if>
             <if test="age!=null">
-                 age = #{age},
+                age = #{age},
             </if>
-            <if test="Phone!=null and Phone!=''">
-                 phone = #{phone},
+            <if test="phone!=null and phone!=''">
+                phone = #{phone},
             </if>
             <if test="email!=null and email!=''">
-                 email = #{email},
+                email = #{email},
             </if>
-            <if test="status!=null ">
-                 status = #{status}
+            <if test="status!=null">
+                status = #{status}
             </if>
         </set>
-        where id=#{id};
+        where id = #{id}
     </update>
+
 </mapper>

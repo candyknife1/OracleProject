@@ -1,4 +1,4 @@
-package com.lzw.web.controller;
+package com.lzw.controller;
 
 import com.alibaba.fastjson.JSONObject;
 import com.lzw.pojo.User;
@@ -8,10 +8,10 @@ import com.lzw.util.CheckCodeUtil;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.*;
-import javax.servlet.ServletOutputStream;
-import javax.servlet.http.Cookie;
-import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
+import jakarta.servlet.ServletOutputStream;
+import jakarta.servlet.http.Cookie;
+import jakarta.servlet.http.HttpServletResponse;
+import jakarta.servlet.http.HttpSession;
 import java.io.IOException;
 
 @Controller
@@ -20,11 +20,11 @@ public class UserController {
 
     private UserService userService = new UserServiceImpl();
 
-    @PostMapping("/login")
+    @GetMapping("/login")
     public String login(
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam(required = false) String remember,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam(name = "remember", required = false) String remember,
             HttpServletResponse response,
             HttpSession session) throws IOException {
 
@@ -46,11 +46,12 @@ public class UserController {
         }
     }
 
+
     @PostMapping("/register")
     public String register(
-            @RequestParam String username,
-            @RequestParam String password,
-            @RequestParam String checkCode,
+            @RequestParam("username") String username,
+            @RequestParam("password") String password,
+            @RequestParam("checkCode") String checkCode,
             HttpSession session) {
 
         String checkCodeGen = (String) session.getAttribute("checkCodeGen");
@@ -82,7 +83,7 @@ public class UserController {
 
     @GetMapping("/selectUser")
     @ResponseBody
-    public boolean selectUser(@RequestParam String username) {
+    public boolean selectUser(@RequestParam("username") String username) {
         return userService.selectByName(username);
     }
 

@@ -42,7 +42,7 @@
                 <br>
                 <el-button type="info" size="mini"@click="dialogVisible2=true" plain>修改密码</el-button>
                 <el-dropdown-item>
-                    <el-button type="warning" size="mini" @click="quit" plain>退出登录</el-button>
+                    <el-button type="warning" size="mini" @click="out" plain>退出登录</el-button>
                 </el-dropdown-item>
             </el-dropdown-menu>
         </el-dropdown>
@@ -583,10 +583,10 @@
                 });
             },
             //退出登录
-            quit(){
+            out(){
                 axios({
                     method: "post",
-                    url: "brand/quit"
+                    url: "student/out"
                 }).then(function (resp) {
                     window.location.reload();
                 })

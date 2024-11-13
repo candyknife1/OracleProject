@@ -18,9 +18,20 @@ public interface StudentMapper {
 
     void deleteByIds(@Param("ids") int[] var1);
 
-    @Select({"select  * from stu limit #{begin},#{size}"})
-    @ResultMap({"studentResultMap"})
-    List<Student> selectByPage(@Param("begin") int var1, @Param("size") int var2);
+//    @Select({"select  * from stu limit #{begin},#{size}"})
+//    @ResultMap({"studentResultMap"})
+//    List<Student> selectByPage(@Param("begin") int var1, @Param("size") int var2);
+
+    @Select({
+            "SELECT * FROM (",
+            "   SELECT a.*, ROWNUM rnum FROM (",
+            "       SELECT * FROM stu",
+            "   ) a WHERE ROWNUM <= #{begin} + #{size}",
+            ") WHERE rnum > #{begin}"
+    })
+    @ResultMap("studentResultMap")
+    List<Student> selectByPage(@Param("begin") int begin, @Param("size") int size);
+
 
     @Select({"select count(*) from stu"})
     int selectTotalCount();
